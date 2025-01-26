@@ -1,0 +1,141 @@
+# LitElement TypeScript Project Template
+
+This is a working template for a LitElement project using TypeScript, with GitHub Pages deployment configured. It includes routing and three example pages.
+
+## Prerequisites
+
+- Node.js (v20 recommended)
+- npm (comes with Node.js)
+- Git
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Raudaschl/get_lit_test.git
+cd get_lit_test
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Start Development Server
+
+```bash
+npm start
+```
+
+This will start a development server at http://localhost:8000
+
+## Project Structure
+
+```
+.
+├── .github/workflows/      # GitHub Actions workflow
+│   └── deploy.yml         # Deployment configuration
+├── src/                   # Source files
+│   ├── my-app.ts         # Main application component
+│   └── pages/            # Page components
+│       ├── home-page.ts
+│       ├── about-page.ts
+│       └── contact-page.ts
+├── scripts/              # Build scripts
+│   └── copy-index.js     # Script to prepare index.html for production
+├── index.html           # Main HTML file
+├── package.json         # Project dependencies and scripts
+├── rollup.config.js     # Rollup bundler configuration
+├── tsconfig.json        # TypeScript configuration
+└── web-dev-server.config.mjs  # Development server configuration
+```
+
+## Key Files Explained
+
+### src/my-app.ts
+The main application component that handles routing and navigation. It imports and uses the page components.
+
+### src/pages/*
+Individual page components that represent different routes in the application.
+
+### index.html
+The main HTML file that loads the application. In development, it loads TypeScript directly; in production, it loads the compiled JavaScript.
+
+## Available Scripts
+
+- `npm start`: Starts the development server
+- `npm run build`: Builds the project for production
+- `npm run preview`: Preview the production build locally
+
+## Setting Up GitHub Pages
+
+1. Fork this repository or create your own copy
+2. Update the base href in the build process:
+   - In `scripts/copy-index.js`, change:
+   ```javascript
+   '<base href="/get_lit_test/">'
+   ```
+   to match your repository name:
+   ```javascript
+   '<base href="/your-repo-name/">'
+   ```
+
+3. Enable GitHub Pages:
+   - Go to your repository settings
+   - Navigate to Pages
+   - Under "Build and deployment", select "GitHub Actions"
+
+## Common Issues and Solutions
+
+### No Content Showing on Pages
+If pages are blank but navigation works:
+- Check browser console for errors
+- Verify that page components are properly imported in `my-app.ts`
+- Ensure the router outlet exists and is properly configured
+
+### Build Failures
+Common build issues and solutions:
+- `tslib` missing: Run `npm install tslib`
+- TypeScript errors: Check `tsconfig.json` configuration
+- Rollup errors: Verify `rollup.config.js` settings
+
+## Development Tips
+
+1. Always check the browser console (F12) for errors
+2. Use the debug logs added to components for troubleshooting
+3. Remember that the base path is different in development vs production
+
+## Deployment
+
+The project will automatically deploy to GitHub Pages when you push to the main branch. The deployment process:
+1. Builds the project
+2. Uploads the build artifacts
+3. Deploys to GitHub Pages
+
+You can monitor deployments in the Actions tab of your repository.
+
+## Making Changes
+
+1. Make your changes in the `src` directory
+2. Test locally using `npm start`
+3. Build locally to verify with `npm run build`
+4. Commit and push to deploy:
+```bash
+git add .
+git commit -m "Your commit message"
+git push origin main
+```
+
+## Support
+
+If you encounter issues:
+1. Check the browser console for errors
+2. Review the GitHub Actions logs for build/deployment issues
+3. Verify all dependencies are installed correctly
+4. Ensure your repository settings are configured properly
+
+## License
+
+This project is open source and available under the MIT License.
