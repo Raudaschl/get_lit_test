@@ -2927,17 +2927,21 @@ usageStatistics();
 Router.NavigationTrigger = {POPSTATE, CLICK};
 
 let MyApp = class MyApp extends s {
-    firstUpdated() {
-        var _a, _b;
+    getBaseUrl() {
+        const baseElement = document.querySelector('base');
+        return (baseElement === null || baseElement === void 0 ? void 0 : baseElement.getAttribute('href')) || '/';
+    }
+    async firstUpdated() {
+        var _a;
         const outlet = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector('#outlet');
         if (!outlet) {
             console.error('No outlet element found');
             return;
         }
-        this.router = new Router(outlet);
-        // Get base URL from base tag if it exists, otherwise use '/'
-        const baseUrl = ((_b = document.querySelector('base')) === null || _b === void 0 ? void 0 : _b.href) || '/';
+        const baseUrl = this.getBaseUrl();
         console.log('Base URL:', baseUrl); // Debug log
+        // Initialize router
+        this.router = new Router(outlet);
         // Configure router
         this.router.setRoutes([
             {
@@ -2961,18 +2965,19 @@ let MyApp = class MyApp extends s {
                 action: () => { console.log('Redirecting to home page'); }
             }
         ]);
-        if (this.router.ready) {
-            console.log('Router is ready');
-        }
-        else {
-            console.log('Router is not ready');
-        }
         // Set base URL for router
         this.router.baseUrl = baseUrl;
+        // Wait for router to be ready
+        try {
+            await this.router.ready;
+            console.log('Router is ready');
+        }
+        catch (error) {
+            console.error('Router failed to initialize:', error);
+        }
     }
     render() {
-        var _a;
-        const baseUrl = ((_a = document.querySelector('base')) === null || _a === void 0 ? void 0 : _a.href) || '/';
+        const baseUrl = this.getBaseUrl();
         return x `
             <nav>
                 <a href="${baseUrl}">Home</a>

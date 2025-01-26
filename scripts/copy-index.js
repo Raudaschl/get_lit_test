@@ -21,10 +21,6 @@ try {
             '<script type="module" src="./my-app.js"></script>'
         );
 
-    // Log the modified content
-    console.log('Modified content:');
-    console.log(updatedContent);
-
     // Ensure dist directory exists
     if (!fs.existsSync('dist')) {
         console.log('Creating dist directory...');

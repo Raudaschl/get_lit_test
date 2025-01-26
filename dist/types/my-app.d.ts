@@ -1,11 +1,12 @@
 import { LitElement } from 'lit';
-import './pages/home-page.js';
-import './pages/about-page.js';
-import './pages/contact-page.js';
+import './pages/home-page';
+import './pages/about-page';
+import './pages/contact-page';
 export declare class MyApp extends LitElement {
     static styles: import("lit").CSSResult;
     private router?;
-    firstUpdated(): void;
+    private getBaseUrl;
+    firstUpdated(): Promise<void>;
     render(): import("lit-html").TemplateResult<1>;
 }
 declare global {

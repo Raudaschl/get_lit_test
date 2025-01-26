@@ -3,10 +3,10 @@ import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 
-// Explicitly import page components
-import './pages/home-page.js';
-import './pages/about-page.js';
-import './pages/contact-page.js';
+// Import page components
+import './pages/home-page';
+import './pages/about-page';
+import './pages/contact-page';
 
 @customElement('my-app')
 export class MyApp extends LitElement {
@@ -35,18 +35,23 @@ export class MyApp extends LitElement {
 
     private router?: Router;
 
-    firstUpdated() {
+    private getBaseUrl(): string {
+        const baseElement = document.querySelector('base');
+        return baseElement?.getAttribute('href') || '/';
+    }
+
+    async firstUpdated() {
         const outlet = this.shadowRoot?.querySelector('#outlet');
         if (!outlet) {
             console.error('No outlet element found');
             return;
         }
 
-        this.router = new Router(outlet);
-        
-        // Get base URL from base tag if it exists, otherwise use '/'
-        const baseUrl = document.querySelector('base')?.href || '/';
+        const baseUrl = this.getBaseUrl();
         console.log('Base URL:', baseUrl); // Debug log
+        
+        // Initialize router
+        this.router = new Router(outlet);
         
         // Configure router
         this.router.setRoutes([
@@ -72,18 +77,20 @@ export class MyApp extends LitElement {
             }
         ]);
 
-        if (this.router.ready) {
-            console.log('Router is ready');
-        } else {
-            console.log('Router is not ready');
-        }
-
         // Set base URL for router
         this.router.baseUrl = baseUrl;
+
+        // Wait for router to be ready
+        try {
+            await this.router.ready;
+            console.log('Router is ready');
+        } catch (error) {
+            console.error('Router failed to initialize:', error);
+        }
     }
 
     render() {
-        const baseUrl = document.querySelector('base')?.href || '/';
+        const baseUrl = this.getBaseUrl();
         
         return html`
             <nav>
@@ -96,7 +103,6 @@ export class MyApp extends LitElement {
     }
 }
 
-// Export the component
 declare global {
     interface HTMLElementTagNameMap {
         'my-app': MyApp;
