@@ -1,7 +1,6 @@
 {
     "name": "lit-website",
     "version": "1.0.0",
-    "description": "LitElement Website Prototype",
     "type": "module",
     "scripts": {
         "start": "web-dev-server --config web-dev-server.config.mjs",
@@ -23,9 +22,5 @@
         "rollup-plugin-copy": "^3.4.0",
         "rimraf": "^3.0.2",
         "http-server": "^14.1.1"
-    },
-    "main": "rollup.config.js",
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
+    }
 }
