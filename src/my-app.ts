@@ -3,6 +3,11 @@ import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 
+// Explicitly import page components
+import './pages/home-page.js';
+import './pages/about-page.js';
+import './pages/contact-page.js';
+
 @customElement('my-app')
 export class MyApp extends LitElement {
     static styles = css`
@@ -28,20 +33,53 @@ export class MyApp extends LitElement {
         }
     `;
 
+    private router?: Router;
+
     firstUpdated() {
-        const router = new Router(this.shadowRoot?.querySelector('#outlet'));
+        const outlet = this.shadowRoot?.querySelector('#outlet');
+        if (!outlet) {
+            console.error('No outlet element found');
+            return;
+        }
+
+        this.router = new Router(outlet);
         
         // Get base URL from base tag if it exists, otherwise use '/'
         const baseUrl = document.querySelector('base')?.href || '/';
+        console.log('Base URL:', baseUrl); // Debug log
         
-        // Configure router with base URL
-        router.setRoutes([
-            { path: '/', component: 'home-page' },
-            { path: '/about', component: 'about-page' },
-            { path: '/contact', component: 'contact-page' },
-            { path: '(.*)', redirect: '/' }
+        // Configure router
+        this.router.setRoutes([
+            {
+                path: '/',
+                component: 'home-page',
+                action: () => { console.log('Navigating to home page'); }
+            },
+            {
+                path: '/about',
+                component: 'about-page',
+                action: () => { console.log('Navigating to about page'); }
+            },
+            {
+                path: '/contact',
+                component: 'contact-page',
+                action: () => { console.log('Navigating to contact page'); }
+            },
+            {
+                path: '(.*)',
+                redirect: '/',
+                action: () => { console.log('Redirecting to home page'); }
+            }
         ]);
-        router.baseUrl = baseUrl;
+
+        if (this.router.ready) {
+            console.log('Router is ready');
+        } else {
+            console.log('Router is not ready');
+        }
+
+        // Set base URL for router
+        this.router.baseUrl = baseUrl;
     }
 
     render() {
@@ -55,5 +93,12 @@ export class MyApp extends LitElement {
             </nav>
             <main id="outlet"></main>
         `;
+    }
+}
+
+// Export the component
+declare global {
+    interface HTMLElementTagNameMap {
+        'my-app': MyApp;
     }
 }

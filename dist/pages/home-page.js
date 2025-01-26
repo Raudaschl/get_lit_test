@@ -1,9 +1,25 @@
-import { LitElement, html, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { i, _ as __decorate, s, x, e } from '../query-assigned-elements-868cdd0c.js';
 
-@customElement('home-page')
-export class HomePage extends LitElement {
-    static styles = css`
+let HomePage = class HomePage extends s {
+    constructor() {
+        super();
+        console.log('HomePage component constructed');
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        console.log('HomePage connected to DOM');
+    }
+    render() {
+        console.log('HomePage rendering');
+        return x `
+            <div class="home-content">
+                <h1>Welcome Home</h1>
+                <p>This is the home page of our LitElement website.</p>
+            </div>
+        `;
+    }
+};
+HomePage.styles = i `
         :host {
             display: block;
             padding: 1rem;
@@ -12,30 +28,9 @@ export class HomePage extends LitElement {
             color: #333;
         }
     `;
+HomePage = __decorate([
+    e('home-page')
+], HomePage);
 
-    constructor() {
-        super();
-        console.log('HomePage component constructed');
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-        console.log('HomePage connected to DOM');
-    }
-
-    render() {
-        console.log('HomePage rendering');
-        return html`
-            <div class="home-content">
-                <h1>Welcome Home</h1>
-                <p>This is the home page of our LitElement website.</p>
-            </div>
-        `;
-    }
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'home-page': HomePage;
-    }
-}
+export { HomePage };
+//# sourceMappingURL=home-page.js.map

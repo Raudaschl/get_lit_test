@@ -2,11 +2,17 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 export default {
-    input: 'src/my-app.ts',
+    input: {
+        'my-app': 'src/my-app.ts',
+        'pages/home-page': 'src/pages/home-page.ts',
+        'pages/about-page': 'src/pages/about-page.ts',
+        'pages/contact-page': 'src/pages/contact-page.ts'
+    },
     output: {
         dir: 'dist',
         format: 'es',
-        sourcemap: true
+        sourcemap: true,
+        entryFileNames: '[name].js'
     },
     plugins: [
         resolve(),

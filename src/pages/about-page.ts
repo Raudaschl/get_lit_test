@@ -15,7 +15,7 @@ export class AboutPage extends LitElement {
     render() {
         return html`
             <h1>About Us</h1>
-            <p>Learn more about our company and mission.</p>
+            <p>Learn more about our team and mission.</p>
         `;
     }
 }
