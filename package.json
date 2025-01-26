@@ -4,13 +4,15 @@
     "type": "module",
     "scripts": {
         "start": "web-dev-server --config web-dev-server.config.mjs",
-        "build": "rimraf dist && rollup -c && npm run copy-index",
+        "prebuild": "echo 'Starting build process...' && rimraf dist",
+        "build": "rollup -c && npm run copy-index",
         "copy-index": "node scripts/copy-index.js",
         "preview": "http-server dist"
     },
     "dependencies": {
         "lit": "^2.7.0",
-        "@vaadin/router": "^1.7.5"
+        "@vaadin/router": "^1.7.5",
+        "tslib": "^2.6.2"
     },
     "devDependencies": {
         "typescript": "^4.9.0",
